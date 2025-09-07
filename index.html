@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reckoning Latitude - Standards Alignment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .selector-section {
+            background: #fffbf0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px solid #d4af37;
+        }
+
+        .selector-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .state-selector {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .state-selector:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .standards-display {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .standards-header {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .standards-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .standards-section {
+            margin-bottom: 25px;
+            background: #fffbf0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #d4af37;
+        }
+
+        .standards-section h3 {
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 5px;
+        }
+
+        .standard-item {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .standard-code {
+            font-weight: bold;
+            color: #d4af37;
+            font-size: 0.9rem;
+        }
+
+        .standard-text {
+            margin-top: 5px;
+            color: #555;
+        }
+
+        .activity-info {
+            background: #fff8e1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #d4af37;
+        }
+
+        .activity-info h3 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            background: #fffbf0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .selector-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧭 Reckoning Latitude</h1>
+            <p>Standards Alignment Tool for Teachers</p>
+        </div>
+
+        <div class="content">
+            <div class="activity-info">
+                <h3>Activity Overview</h3>
+                <p><strong>Reckoning Latitude</strong> engages students in building and using astrolabes to determine their latitude through Polaris measurements, connecting ancient navigation techniques to modern understanding of Earth's geometry. Teams experience the same systematic celestial measurement methods that guided explorers for millennia while learning why longitude determination remained unsolved until the chronometer revolution. Students analyze measurement accuracy and connect historical navigation challenges to modern GPS technology.</p>
+            </div>
+
+            <div class="selector-section">
+                <div class="selector-label">Select your state or standards framework:</div>
+                <select id="stateSelector" class="state-selector">
+                    <option value="">Choose your state...</option>
+                    <option value="ngss">Next Generation Science Standards (NGSS)</option>
+                    <option value="california">California</option>
+                    <option value="texas">Texas (TEKS)</option>
+                    <option value="florida">Florida</option>
+                    <option value="new_york">New York</option>
+                    <option value="pennsylvania">Pennsylvania</option>
+                    <option value="illinois">Illinois</option>
+                    <option value="ohio">Ohio</option>
+                    <option value="georgia">Georgia</option>
+                    <option value="north_carolina">North Carolina</option>
+                    <option value="michigan">Michigan</option>
+                </select>
+            </div>
+
+            <div id="standardsDisplay" class="standards-display">
+                <!-- Standards content will be populated here -->
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Part of the Conceptual Academy Earth Science Field Journal Series</p>
+        </div>
+    </div>
+
+    <script>
+        const standardsData = {
+            ngss: {
+                title: "Next Generation Science Standards (NGSS)",
+                sections: {
+                    "High School Earth and Space Science": [
+                        {
+                            code: "HS-ESS1-4",
+                            text: "Use mathematical or computational representations to predict the motion of orbiting objects in the solar system."
+                        },
+                        {
+                            code: "HS-ESS1-5",
+                            text: "Evaluate evidence of the past and current movements of continental and oceanic crust and the theory of plate tectonics to explain the ages of crustal rocks."
+                        },
+                        {
+                            code: "HS-ESS3-3",
+                            text: "Create a computational simulation to illustrate the relationships among management of natural resources, the sustainability of human populations, and biodiversity."
+                        }
+                    ],
+                    "Science & Engineering Practices": [
+                        {
+                            code: "Developing and Using Models",
+                            text: "Students develop and use physical models (astrolabes) to understand geometric relationships between Earth and celestial objects."
+                        },
+                        {
+                            code: "Planning and Carrying Out Investigations", 
+                            text: "Students systematically measure star positions and analyze measurement accuracy using collaborative techniques."
+                        },
+                        {
+                            code: "Using Mathematics and Computational Thinking",
+                            text: "Students apply geometric principles and error analysis to connect celestial observations to Earth's coordinate system."
+                        }
+                    ],
+                    "Crosscutting Concepts": [
+                        {
+                            code: "Scale, Proportion, and Quantity",
+                            text: "Students understand how small angular measurements correspond to large-scale geographical distances on Earth."
+                        },
+                        {
+                            code: "Systems and System Models",
+                            text: "Students model Earth as part of a larger celestial coordinate system for navigation purposes."
+                        }
+                    ]
+                }
+            },
+            california: {
+                title: "California Science Standards",
+                sections: {
+                    "Earth Science": [
+                        {
+                            code: "ES 2c",
+                            text: "Students know the evidence indicating that all elements with an atomic number greater than that of lithium have been formed by nuclear processes in stars."
+                        },
+                        {
+                            code: "ES 2e",
+                            text: "Students know the Sun is a typical star and is powered by nuclear reactions, primarily the fusion of hydrogen to form helium."
+                        },
+                        {
+                            code: "ES 1g",
+                            text: "Students know the usefulness and limitations of models and theories as scientific representations of reality."
+                        }
+                    ],
+                    "Investigation & Experimentation": [
+                        {
+                            code: "IE 1a",
+                            text: "Select and use appropriate tools and technology to perform tests, collect data, analyze relationships, and display data."
+                        },
+                        {
+                            code: "IE 1c",
+                            text: "Identify possible reasons for inconsistent results, such as sources of error or uncontrolled conditions."
+                        },
+                        {
+                            code: "IE 1d",
+                            text: "Formulate explanations by using logic and evidence."
+                        }
+                    ]
+                }
+            },
+            texas: {
+                title: "Texas Essential Knowledge and Skills (TEKS)",
+                sections: {
+                    "Astronomy": [
+                        {
+                            code: "AST 4A",
+                            text: "Compare and contrast the various methods and tools used to measure distances and sizes of objects in the universe."
+                        },
+                        {
+                            code: "AST 4B",
+                            text: "Demonstrate the use of units of measurement in astronomy, including Astronomical Unit and light-year."
+                        },
+                        {
+                            code: "AST 8A",
+                            text: "Describe historical and contemporary models of the universe and solar system such as heliocentric, geocentric, and Big Bang Theory."
+                        }
+                    ],
+                    "Earth and Space Science": [
+                        {
+                            code: "ESS 9A",
+                            text: "Research and describe the historical development of the theories of the origin of the universe and solar system."
+                        },
+                        {
+                            code: "ESS 2F",
+                            text: "Collect data and make measurements with accuracy and precision."
+                        }
+                    ]
+                }
+            },
+            florida: {
+                title: "Florida Science Standards",
+                sections: {
+                    "Earth/Space Science": [
+                        {
+                            code: "SC.912.E.5.6",
+                            text: "Develop logical connections through physical principles, including Kepler's and Newton's Laws about the relationships and the effects of Earth, Moon, and Sun on each other."
+                        },
+                        {
+                            code: "SC.912.E.5.7",
+                            text: "Relate the history of and explain the justification for future space exploration and continuing technology development."
+                        },
+                        {
+                            code: "SC.912.E.5.8",
+                            text: "Connect the concepts of radiation and the electromagnetic spectrum to the use of historical and newly-developed astronomical tools."
+                        }
+                    ],
+                    "Nature of Science": [
+                        {
+                            code: "SC.912.N.1.1",
+                            text: "Define a problem based on a specific body of knowledge, ask questions, and form a testable hypothesis."
+                        },
+                        {
+                            code: "SC.912.N.3.5",
+                            text: "Describe the function of models in science, and identify the wide range of models used in science."
+                        }
+                    ]
+                }
+            },
+            new_york: {
+                title: "New York State Science Standards",
+                sections: {
+                    "Earth Science": [
+                        {
+                            code: "ES 1.1f",
+                            text: "Gravity is the force that keeps planets in orbit around the Sun and governs the rest of the motion in the solar system."
+                        },
+                        {
+                            code: "ES 1.2a",
+                            text: "Other stars are like the Sun but are so far away they look like points of light."
+                        },
+                        {
+                            code: "ES 1.2b",
+                            text: "The Sun appears to be the brightest star in the sky because it is the closest one to Earth."
+                        }
+                    ],
+                    "Scientific Inquiry": [
+                        {
+                            code: "SI 1.2a",
+                            text: "Devise ways of making observations to test proposed explanations."
+                        },
+                        {
+                            code: "SI 1.3a",
+                            text: "Use various methods of representing and organizing observations and data."
+                        },
+                        {
+                            code: "SI 3.1a",
+                            text: "Interpretation of data leads to development of additional hypotheses, the formulation of generalizations, or explanations of natural phenomena."
+                        }
+                    ]
+                }
+            },
+            pennsylvania: {
+                title: "Pennsylvania Science Standards",
+                sections: {
+                    "Earth Sciences": [
+                        {
+                            code: "3.4.10.A",
+                            text: "Explain concepts about the universe and the solar system."
+                        },
+                        {
+                            code: "3.4.12.A",
+                            text: "Analyze the structure, origin and evolution of the universe and solar system."
+                        },
+                        {
+                            code: "3.4.12.C",
+                            text: "Evaluate the utility of scales and models as scientific tools."
+                        }
+                    ],
+                    "Scientific Inquiry": [
+                        {
+                            code: "3.2.10.A",
+                            text: "Apply the components of scientific processes to different types of investigations."
+                        },
+                        {
+                            code: "3.2.12.B",
+                            text: "Apply appropriate instruments and apparatus to examine a variety of objects and processes."
+                        },
+                        {
+                            code: "3.2.12.C",
+                            text: "Evaluate experimental information for accuracy and adherence to science processes."
+                        }
+                    ]
+                }
+            },
+            illinois: {
+                title: "Illinois Science Standards",
+                sections: {
+                    "Earth and Space Sciences": [
+                        {
+                            code: "HS-ESS1-4",
+                            text: "Use mathematical or computational representations to predict the motion of orbiting objects in the solar system."
+                        },
+                        {
+                            code: "HS-ESS1-5",
+                            text: "Evaluate evidence of the past and current movements of continental and oceanic crust and the theory of plate tectonics."
+                        }
+                    ],
+                    "Science Practices": [
+                        {
+                            code: "Developing Models",
+                            text: "Students create and use physical instruments to model geometric relationships in astronomical systems."
+                        },
+                        {
+                            code: "Mathematical Thinking",
+                            text: "Students apply mathematical analysis to connect angular measurements to geographic coordinates."
+                        },
+                        {
+                            code: "Analyzing Data",
+                            text: "Students systematically analyze measurement accuracy and sources of error in scientific instruments."
+                        }
+                    ]
+                }
+            },
+            ohio: {
+                title: "Ohio Science Standards",
+                sections: {
+                    "Earth and Space Sciences": [
+                        {
+                            code: "ESS.ES.1",
+                            text: "The universe is composed of a variety of different objects, which are organized into systems, each of which develops according to accepted physical processes and laws."
+                        },
+                        {
+                            code: "ESS.ES.2",
+                            text: "The solar system is a collection of objects that are held in orbit around our sun by its gravitational pull on them."
+                        },
+                        {
+                            code: "ESS.ES.3",
+                            text: "The universe can be studied using a variety of equipment to extend our ability to gather information."
+                        }
+                    ],
+                    "Scientific Inquiry": [
+                        {
+                            code: "SI.A.2",
+                            text: "Design and conduct scientific investigations."
+                        },
+                        {
+                            code: "SI.A.5",
+                            text: "Develop descriptions, models, explanations and predictions."
+                        },
+                        {
+                            code: "SI.A.6",
+                            text: "Think critically and logically to make relationships between evidence and explanations."
+                        }
+                    ]
+                }
+            },
+            georgia: {
+                title: "Georgia Science Standards",
+                sections: {
+                    "Astronomy": [
+                        {
+                            code: "SASt1d",
+                            text: "Calculate distances in space using appropriate units (AU, light-years, etc.)."
+                        },
+                        {
+                            code: "SASt4a",
+                            text: "Describe historical models of astronomy leading to modern theory."
+                        },
+                        {
+                            code: "SASt4b",
+                            text: "Explain how the development of new technologies aided the development of modern astronomical theory."
+                        }
+                    ],
+                    "Mathematical Applications": [
+                        {
+                            code: "SASt1e",
+                            text: "Use appropriate technology and mathematical analysis to investigate astronomical phenomena."
+                        }
+                    ]
+                }
+            },
+            north_carolina: {
+                title: "North Carolina Science Standards",
+                sections: {
+                    "Earth/Environmental Science": [
+                        {
+                            code: "EEn.1.1.1",
+                            text: "Explain the use of technology and digital tools as a scientific process skill."
+                        },
+                        {
+                            code: "EEn.1.1.2",
+                            text: "Develop, use and refine models to understand or represent phenomena, processes and relationships."
+                        },
+                        {
+                            code: "EEn.1.1.3",
+                            text: "Explain how the formation of the solar system resulted in planets at different distances from the sun with different physical and chemical properties."
+                        }
+                    ],
+                    "Scientific Investigation": [
+                        {
+                            code: "EEn.1.1.4",
+                            text: "Explain how incoming solar radiation, ocean currents, and land masses affect weather and climate."
+                        }
+                    ]
+                }
+            },
+            michigan: {
+                title: "Michigan Science Standards",
+                sections: {
+                    "Earth Science": [
+                        {
+                            code: "HS-ESS1-4",
+                            text: "Use mathematical or computational representations to predict the motion of orbiting objects in the solar system."
+                        },
+                        {
+                            code: "HS-ESS1-5",
+                            text: "Evaluate evidence of the past and current movements of continental and oceanic crust and the theory of plate tectonics."
+                        }
+                    ],
+                    "Engineering Design": [
+                        {
+                            code: "HS-ETS1-2",
+                            text: "Design solutions to complex real-world problems by breaking them down into smaller, more manageable problems."
+                        },
+                        {
+                            code: "HS-ETS1-3",
+                            text: "Evaluate a solution to a complex real-world problem based on prioritized criteria and trade-offs that account for a range of constraints."
+                        }
+                    ]
+                }
+            }
+        };
+
+        document.getElementById('stateSelector').addEventListener('change', function() {
+            const selectedState = this.value;
+            const displayDiv = document.getElementById('standardsDisplay');
+            
+            if (selectedState && standardsData[selectedState]) {
+                displayStandards(selectedState);
+                displayDiv.style.display = 'block';
+            } else {
+                displayDiv.style.display = 'none';
+            }
+        });
+
+        function displayStandards(state) {
+            const data = standardsData[state];
+            const displayDiv = document.getElementById('standardsDisplay');
+            
+            let html = `
+                <div class="standards-header">
+                    <h2>${data.title}</h2>
+                    <p>Standards addressed by the Latitude Detectives activity</p>
+                </div>
+            `;
+            
+            for (const [sectionName, standards] of Object.entries(data.sections)) {
+                html += `
+                    <div class="standards-section">
+                        <h3>${sectionName}</h3>
+                `;
+                
+                standards.forEach(standard => {
+                    html += `
+                        <div class="standard-item">
+                            <div class="standard-code">${standard.code}</div>
+                            <div class="standard-text">${standard.text}</div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+            }
+            
+            displayDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
